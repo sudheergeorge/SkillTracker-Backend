@@ -19,6 +19,14 @@ namespace Profile.API.Controllers
             _mediator = mediator;
         }
 
+        [HttpGet(Name = "Health")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<ActionResult<int>> Health()
+        {
+            var response = "I am Good!!";
+            return Ok(response);
+        }
+
         [HttpPost(Name = "AddProfile")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<int>> AddProfile([FromBody] AddProfileCommand command)

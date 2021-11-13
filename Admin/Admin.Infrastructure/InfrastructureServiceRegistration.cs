@@ -3,6 +3,7 @@ using Admin.Domain.Entities;
 using Admin.Infrastructure.Cache;
 using Admin.Infrastructure.ESCache;
 using Admin.Infrastructure.Repositories;
+using Amazon;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
 using Microsoft.Extensions.Configuration;
@@ -17,12 +18,19 @@ namespace Admin.Infrastructure
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddEnyimMemcached(configuration);
-
-            var dbClient = new AmazonDynamoDBClient(new AmazonDynamoDBConfig()
+            AmazonDynamoDBClient dbClient;
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
             {
-                ServiceURL = "http://localhost:8000",
-                AuthenticationRegion = "eu-west-1"
-            });
+                dbClient = new AmazonDynamoDBClient(RegionEndpoint.GetBySystemName("us-east-2"));
+            }
+            else
+            {
+                dbClient = new AmazonDynamoDBClient(new AmazonDynamoDBConfig()
+                {
+                    ServiceURL = "http://localhost:8000",
+                    AuthenticationRegion = "eu-west-1"
+                });
+            }
             services.AddSingleton<AmazonDynamoDBClient>(dbClient);
             var dbContext = new DynamoDBContext(dbClient);
             services.AddSingleton<DynamoDBContext>(dbContext);

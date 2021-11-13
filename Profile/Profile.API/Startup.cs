@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Profile.Application;
 using Profile.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,18 +29,30 @@ namespace Profile.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddApplicationServices();
-            services.AddInfrastructureServices(Configuration);
+            try
+            {
+                services.AddApplicationServices();
+                services.AddInfrastructureServices(Configuration);
 
-            // MassTransit-RabbitMQ Configuration
-            services.AddMassTransit(config => {
-                config.UsingRabbitMq((ctx, cfg) => {
-                    cfg.Host(Configuration["EventBusSettings:HostAddress"]);
-                    cfg.UseHealthCheck(ctx);
+                // MassTransit-RabbitMQ Configuration
+                services.AddMassTransit(config =>
+                {
+                    config.UsingRabbitMq((ctx, cfg) =>
+                    {
+                        cfg.Host(Configuration["EventBusSettings:HostAddress"], c =>
+                        {
+                            c.Username(Configuration["EventBusSettings:username"]);
+                            c.Password(Configuration["EventBusSettings:password"]);
+                        });
+                        cfg.UseHealthCheck(ctx);
+                    });
                 });
-            });
-            services.AddMassTransitHostedService();
-
+                services.AddMassTransitHostedService();
+            }
+            catch(Exception ex)
+            {
+                
+            }
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsAllowAll",

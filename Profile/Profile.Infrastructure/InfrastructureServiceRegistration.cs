@@ -4,6 +4,8 @@ using Profile.Application.Contracts;
 using Profile.Infrastructure.Repositories;
 using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2;
+using Amazon;
+using System;
 
 namespace Profile.Infrastructure
 {
@@ -11,10 +13,10 @@ namespace Profile.Infrastructure
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            var dbClient = new AmazonDynamoDBClient(new AmazonDynamoDBConfig()
+            AmazonDynamoDBClient dbClient = new AmazonDynamoDBClient(new AmazonDynamoDBConfig()
             {
-                ServiceURL = "http://localhost:8000",
-                AuthenticationRegion = "eu-west-1"
+                ServiceURL = configuration["DynamoDBServiceURL"],
+                AuthenticationRegion = configuration["DynamoDbRegion"]
             });
             services.AddSingleton<AmazonDynamoDBClient>(dbClient);
             var dbContext = new DynamoDBContext(dbClient);
