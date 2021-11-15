@@ -17,10 +17,10 @@ namespace Admin.Infrastructure.Cache
             this.memcachedClient = memcachedClient;
         }
 
-        public void Set<T>(string key, T value)
+        public async Task SetAsync<T>(string key, T value)
         {
             // Setting cache expiration for an hour
-            memcachedClient.Set(key, value, 60 * 60);
+            await memcachedClient.SetAsync(key, value, 60 * 60);
         }
     }
 }

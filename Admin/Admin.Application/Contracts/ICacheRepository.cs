@@ -8,6 +8,6 @@ namespace Admin.Application.Contracts
 {
     public interface ICacheRepository
     {
-        void Set<T>(string key, T value);
+        Task SetAsync<T>(string key, T value);
     }
 }

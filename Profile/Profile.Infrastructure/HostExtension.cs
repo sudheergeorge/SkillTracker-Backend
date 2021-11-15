@@ -1,6 +1,7 @@
 ﻿
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.Model;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,11 +31,10 @@ namespace Profile.Infrastructure
                 //    await CreateTable(client, "st-profile_repository", "EmpId", "S");
                 //}
             }
-#pragma warning disable CS0168 // The variable 'x' is declared but never used
-            catch(Exception x)
-#pragma warning restore CS0168 // The variable 'x' is declared but never used
+            catch(Exception ex)
             {
-
+                var logger = serviceProvider.GetService(typeof(ILogger)) as ILogger;
+                logger.LogError("Dynamo DB creation failed :" + ex.ToString());
             }
         }
 

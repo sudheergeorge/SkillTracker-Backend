@@ -9,8 +9,9 @@ WORKDIR /src
 COPY ["Admin/Admin.API/Admin.API.csproj", "Admin/Admin.API/"]
 COPY ["Admin/Admin.Infrastructure/Admin.Infrastructure.csproj", "Admin/Admin.Infrastructure/"]
 COPY ["Admin/Admin.Application/Admin.Application.csproj", "Admin/Admin.Application/"]
+COPY ["Common/SkillTracker.Entities/SkillTracker.Entities.csproj", "Common/SkillTracker.Entities/"]
 COPY ["Admin/Admin.Domain/Admin.Domain.csproj", "Admin/Admin.Domain/"]
-COPY ["EventBus.Messaging/EventBus.Messaging.csproj", "EventBus.Messaging/"]
+COPY ["Common/EventBus.Messaging/EventBus.Messaging.csproj", "Common/EventBus.Messaging/"]
 RUN dotnet restore "Admin/Admin.API/Admin.API.csproj"
 COPY . .
 WORKDIR "/src/Admin/Admin.API"

@@ -34,7 +34,11 @@ namespace Admin.API
                 config.AddConsumer<AddProfileConsumer>();
 
                 config.UsingRabbitMq((ctx, cfg) => {
-                    cfg.Host(Configuration["EventBusSettings:HostAddress"]);
+                    cfg.Host(Configuration["EventBusSettings:HostAddress"], c =>
+                    {
+                        c.Username(Configuration["EventBusSettings:username"]);
+                        c.Password(Configuration["EventBusSettings:password"]);
+                    });
                     cfg.UseHealthCheck(ctx);
 
                     cfg.ReceiveEndpoint(Constants.AddProfileQueue, c => {

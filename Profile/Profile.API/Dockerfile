@@ -9,8 +9,9 @@ FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["Profile/Profile.API/Profile.API.csproj", "Profile/Profile.API/"]
 COPY ["Profile/Profile.Application/Profile.Application.csproj", "Profile/Profile.Application/"]
-COPY ["EventBus.Messaging/EventBus.Messaging.csproj", "EventBus.Messaging/"]
 COPY ["Profile/Profile.Domain/Profile.Domain.csproj", "Profile/Profile.Domain/"]
+COPY ["Common/SkillTracker.Entities/SkillTracker.Entities.csproj", "Common/SkillTracker.Entities/"]
+COPY ["Common/EventBus.Messaging/EventBus.Messaging.csproj", "Common/EventBus.Messaging/"]
 COPY ["Profile/Profile.Infrastructure/Profile.Infrastructure.csproj", "Profile/Profile.Infrastructure/"]
 RUN dotnet restore "Profile/Profile.API/Profile.API.csproj"
 COPY . .
