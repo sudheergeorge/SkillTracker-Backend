@@ -1,30 +1,6 @@
 version: 0.2
-#env:
-  #variables:
-     # key: "value"
-     # key: "value"
-  #parameter-store:
-     # key: "value"
-     # key: "value"
-  #secrets-manager:
-     # key: secret-id:json-key:version-stage:version-id
-     # key: secret-id:json-key:version-stage:version-id
-  #exported-variables:
-     # - variable
-     # - variable
-  #git-credential-helper: yes
-#batch:
-  #fast-fail: true
-  #build-list:
-  #build-matrix:
-  #build-graph:
+
 phases:
-    runtime-versions:
-      # name: version
-      # name: version
-    #commands:
-      # - command
-      # - command
   pre_build:
     commands:
       - echo Restore dependencies for Admin
@@ -38,22 +14,6 @@ phases:
   post_build:
     commands:
       - echo Postbuild
-      # - command
-#reports:
-  #report-name-or-arn:
-    #files:
-      # - location
-      # - location
-    #base-directory: location
-    #discard-paths: yes
-    #file-format: JunitXml | CucumberJson
-#artifacts:
-  files:
-    - Admin/Admin.API/app/publish/**/*
-    # - location
-  #name: $(date +%Y-%m-%d)
-  #discard-paths: yes
-  #base-directory: location
-#cache:
-  #paths:
-    # - paths
+  artifacts:
+    files:
+      - Admin/Admin.API/app/publish/**/*
