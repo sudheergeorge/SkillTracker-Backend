@@ -14,6 +14,14 @@ phases:
   post_build:
     commands:
       - echo Postbuild
-artifacts:
   files:
-    - app/publish/**/*
+    - Admin/Admin.API/app/publish/**/*
+    - appspec.yml
+    - installApp.sh
+    # - location
+  #name: $(date +%Y-%m-%d)
+  #discard-paths: yes
+  #base-directory: location
+#cache:
+  #paths:
+    # - paths
