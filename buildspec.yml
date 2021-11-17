@@ -16,7 +16,7 @@ phases:
       - echo Postbuild
 artifacts:
   files:
-    - Admin/Admin.API/app/publish/*
+    - app/publish/*
     # - appspec.yml
     # - installApp.sh
     # - location
