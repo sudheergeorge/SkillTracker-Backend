@@ -8,15 +8,15 @@ phases:
   build:
     commands:
       - echo Build started
-      - dotnet build Admin/Admin.API/Admin.API.csproj -c Release -o ./app/build
+      - dotnet build ./Admin/Admin.API/Admin.API.csproj -c Release -o ./app/build
       - echo Publish started
-      - dotnet publish Admin/Admin.API/Admin.API.csproj -c Release -o ./app/publish
+      - dotnet publish ./Admin/Admin.API/Admin.API.csproj -c Release -o ./app/publish
   post_build:
     commands:
       - echo Postbuild
 artifacts:
   files:
-    - Admin/Admin.API/app/publish/**/*
+    - Admin/Admin.API/app/publish/*
     # - appspec.yml
     # - installApp.sh
     # - location
