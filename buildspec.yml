@@ -17,8 +17,8 @@ phases:
 artifacts:
   files:
     - app/publish/*
-    # - appspec.yml
-    # - installApp.sh
+    - appspec.yml
+    - installApp.sh
     # - location
   #name: $(date +%Y-%m-%d)
   #discard-paths: yes
