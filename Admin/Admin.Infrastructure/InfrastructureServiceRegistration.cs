@@ -18,19 +18,11 @@ namespace Admin.Infrastructure
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddEnyimMemcached(configuration);
-            AmazonDynamoDBClient dbClient;
-            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+            AmazonDynamoDBClient dbClient = new AmazonDynamoDBClient(new AmazonDynamoDBConfig()
             {
-                dbClient = new AmazonDynamoDBClient(RegionEndpoint.GetBySystemName("us-east-2"));
-            }
-            else
-            {
-                dbClient = new AmazonDynamoDBClient(new AmazonDynamoDBConfig()
-                {
-                    ServiceURL = "http://localhost:8000",
-                    AuthenticationRegion = "eu-west-1"
-                });
-            }
+                ServiceURL = configuration["DynamoDBServiceURL"],
+                AuthenticationRegion = configuration["DynamoDbRegion"]
+            });
             services.AddSingleton<AmazonDynamoDBClient>(dbClient);
             var dbContext = new DynamoDBContext(dbClient);
             services.AddSingleton<DynamoDBContext>(dbContext);

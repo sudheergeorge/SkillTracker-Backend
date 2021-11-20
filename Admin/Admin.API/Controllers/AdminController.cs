@@ -26,7 +26,7 @@ namespace Admin.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<int>> Health()
         {
-            var response = "I am Good!!";
+            var response = "Admin is live!!";
             return Ok(response);
         }
         
