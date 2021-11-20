@@ -29,7 +29,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Admin.Infrastructure", "Adm
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{94A79699-495E-4D51-A675-D6492059B16A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkillTracker.Entities", "Common\SkillTracker.Entities\SkillTracker.Entities.csproj", "{F632E801-2E94-4B7D-8C40-EB32D71DA9A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkillTracker.Entities", "Common\SkillTracker.Entities\SkillTracker.Entities.csproj", "{F632E801-2E94-4B7D-8C40-EB32D71DA9A1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{7219F2A1-D5C2-4AC8-B473-A68522C26D2A}"
+	ProjectSection(SolutionItems) = preProject
+		Config\appspec.yml = Config\appspec.yml
+		Config\buildspec-admin.yml = Config\buildspec-admin.yml
+		Config\buildspec-profile.yml = Config\buildspec-profile.yml
+		Config\installApp.sh = Config\installApp.sh
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
