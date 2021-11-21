@@ -11,8 +11,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - cd ..
-      - docker build -f Admin\Admin.API\Dockerfile -t admin-api .
+      - docker build -f ..\Admin\Admin.API\Dockerfile -t admin-api .
       - docker tag admin-api:latest $REPOSITORY_URI:latest
   post_build:
     commands:
