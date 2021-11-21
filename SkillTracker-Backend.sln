@@ -20,6 +20,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Profile", "Profile", "{CB1FEB94-5FDE-49E8-85CD-B52EECF669F4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Admin", "Admin", "{F5DA568F-D9D8-4D90-BE09-5861D915996A}"
+	ProjectSection(SolutionItems) = preProject
+		Admin\buildspec-admin.yml = Admin\buildspec-admin.yml
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Admin.Domain", "Admin\Admin.Domain\Admin.Domain.csproj", "{EC06DD77-6062-4C43-8573-E8F2C64575F5}"
 EndProject
