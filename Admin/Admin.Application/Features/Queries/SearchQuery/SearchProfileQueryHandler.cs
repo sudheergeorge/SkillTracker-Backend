@@ -16,12 +16,12 @@ namespace Admin.Application.Features.Queries.SearchQuery
     {
         private readonly IPersonalInfoProvider _personalInfoProvider;
         private readonly ISkillProvider _skillProvider;
-        // private readonly ICacheProvider _cache;
+         private readonly ICacheProvider _cache;
         private readonly AutoMapper.IMapper _mapper;
         private readonly ILogger<SearchProfileQueryHandler> _logger;
 
         public SearchProfileQueryHandler(
-           //  ICacheProvider cache,
+            // ICacheProvider cache,
             ISkillProvider skillProvider,
             IPersonalInfoProvider personalInfoProvider,
             AutoMapper.IMapper mapper,
