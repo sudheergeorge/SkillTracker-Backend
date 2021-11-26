@@ -26,8 +26,8 @@ namespace Profile.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<int>> Health()
         {
-            _logger.LogInformation("Profile Api- health check.");
-            var response = "I am Good!!";
+            _logger.LogInformation("Profile Api V2- health check.");
+            var response = "Profile Api V2- I am Good!!";
             return Ok(response);
         }
 

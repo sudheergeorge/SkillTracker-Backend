@@ -48,6 +48,18 @@ namespace Admin.API
             });
             services.AddMassTransitHostedService();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsAllowAll",
+                    builder =>
+                    {
+                        builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                    });
+            });
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -64,6 +76,8 @@ namespace Admin.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Admin.API v1"));
             }
+
+            app.UseCors("CorsAllowAll");
 
             app.UseRouting();
 

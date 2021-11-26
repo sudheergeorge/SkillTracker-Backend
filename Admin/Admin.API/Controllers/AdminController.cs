@@ -1,7 +1,7 @@
 ﻿using Admin.Application.Features.Queries.SearchQuery;
 using Admin.Domain.Models;
 using MediatR;
-using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net;
@@ -16,17 +16,20 @@ namespace Admin.API.Controllers
     public class AdminController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<AdminController> _logger;
 
-        public AdminController(IMediator mediator)
+        public AdminController(IMediator mediator, ILogger<AdminController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         [HttpGet(Name = "Health")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public ActionResult<int> Health()
         {
-            var response = "Admin V2 is live!! and healthy too!!";
+            var response = "Admin V3 is live!! and healthy too!!";
+            _logger.LogInformation(response);
             return Ok(response);
         }
         
