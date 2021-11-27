@@ -14,5 +14,6 @@ namespace Admin.Application.Contracts
         Task<List<SkillEntity>> SearchAsync(string skill);
 
         Task<List<string>> SearchForKeyAsync(string skill);
+
     }
 }

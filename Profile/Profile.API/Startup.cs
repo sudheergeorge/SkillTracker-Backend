@@ -1,19 +1,19 @@
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using Profile.Application;
+using Profile.Application.Exceptions;
 using Profile.Infrastructure;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
+using System.Net;
 
 namespace Profile.API
 {
@@ -55,6 +55,8 @@ namespace Profile.API
             {
                 
             }
+            // services.AddScoped<GloabalExceptionFillter>();
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsAllowAll",
@@ -68,6 +70,7 @@ namespace Profile.API
             });
 
             services.AddControllers();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SkillTracker.API", Version = "v1" });
@@ -83,7 +86,36 @@ namespace Profile.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SkillTracker.API v1"));
             }
+            else
+            {
+                app.UseExceptionHandler(errorApp =>
+                {
+                    errorApp.Run(async context =>
+                    {
+                        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        context.Response.ContentType = "application/json";
+                        var exceptionHandlerPathFeature =
+                            context.Features.Get<IExceptionHandlerPathFeature>();
 
+                        if (exceptionHandlerPathFeature?.Error is FileNotFoundException)
+                        {
+                            await context.Response.WriteAsync("File error thrown!");
+                        }
+                        else if (exceptionHandlerPathFeature?.Error is ValidationException)
+                        {
+                            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                            var exception = exceptionHandlerPathFeature.Error as ValidationException;
+                            string result = "{errors:" + JsonConvert.SerializeObject(exception.Errors) + "}";
+                            await context.Response.WriteAsync(result);
+                        }
+                        else
+                        {
+                            await context.Response.WriteAsync("Internal Server error!");
+                        }
+                    });
+                });
+                // app.UseHsts();
+            }
             app.UseCors("CorsAllowAll");
 
             app.UseHttpsRedirection();

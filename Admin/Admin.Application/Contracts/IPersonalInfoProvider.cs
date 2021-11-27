@@ -11,6 +11,8 @@ namespace Admin.Application.Contracts
     {
         Task<List<PersonalInfoEntity>> SearchByNameAsync(string name);
 
+        Task<List<string>> GetEmployeeIdsByname(string name);
+
         Task<PersonalInfoEntity> SearchByEmpIdAsync(string empId);
     }
 }

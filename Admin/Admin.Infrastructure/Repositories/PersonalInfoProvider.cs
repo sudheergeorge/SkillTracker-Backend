@@ -23,6 +23,29 @@ namespace Admin.Infrastructure.Repositories
             _dbcontext = dbcontext;
         }
 
+        public async Task<List<string>> GetEmployeeIdsByname(string name)
+        {
+            QueryRequest queryRequest = new QueryRequest
+            {
+                TableName = _tableName,
+                IndexName = "NameIndex",
+                KeyConditionExpression = "#nm = :v_name",
+                ExpressionAttributeNames = new Dictionary<String, String> {
+                    {"#nm", "name"}
+                },
+                ExpressionAttributeValues = new Dictionary<string, AttributeValue> {
+                    {":v_name", new AttributeValue { S =  name }}
+                },
+                ScanIndexForward = true,
+                ProjectionExpression = "empId"
+            };
+
+            var result = await _client.QueryAsync(queryRequest);
+
+            var reponse = new List<string>();
+            return result.Items.Select(item => item["empId"].S).ToList();
+        }
+
         public async Task<PersonalInfoEntity> SearchByEmpIdAsync(string empId)
         {
             return (await _dbcontext.QueryAsync<PersonalInfoEntity>(empId).GetNextSetAsync()).FirstOrDefault();

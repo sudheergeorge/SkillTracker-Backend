@@ -28,6 +28,7 @@ namespace Admin.Infrastructure.Repositories
             return await _dbcontext.QueryAsync<SkillEntity>(hashKey).GetNextSetAsync();
         }
 
+
         public async Task<List<SkillEntity>> SearchAsync(string skill)
         {
             QueryRequest queryRequest = new QueryRequest

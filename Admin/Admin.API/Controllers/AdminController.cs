@@ -28,7 +28,7 @@ namespace Admin.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public ActionResult<int> Health()
         {
-            var response = "Admin V3 is live!! and healthy too!!";
+            var response = "Admin V5 is live!! and healthy too!!";
             _logger.LogInformation(response);
             return Ok(response);
         }
