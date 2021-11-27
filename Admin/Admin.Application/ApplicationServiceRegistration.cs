@@ -1,4 +1,5 @@
-﻿using Admin.Application.Contracts;
+﻿using Admin.Application.Behaviors;
+using Admin.Application.Contracts;
 using Admin.Application.Services;
 using FluentValidation;
 using MediatR;
@@ -15,6 +16,7 @@ namespace Admin.Application
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(BusinessBehavior<,>));
             services.AddScoped(typeof(ISearchService), typeof(SearchService));
 
             return services;

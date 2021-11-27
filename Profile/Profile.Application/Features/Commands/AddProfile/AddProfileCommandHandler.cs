@@ -54,7 +54,7 @@ namespace Profile.Application.Features.Commands.AddProfile
         private async Task<string> SavePersonalInfo(AddProfileCommand request)
         {
             var personalInfo = _mapper.Map<PersonalInfoEntity>(request);
-            personalInfo.UserId = $"user{personalInfo.EmpId}";
+            personalInfo.UserId = $"user{personalInfo.EmpId.ToUpper().Replace("CTS", "")}";
             personalInfo.CreatedDate = System.DateTime.UtcNow;
             personalInfo.LastModifiedDate = System.DateTime.UtcNow;
 
