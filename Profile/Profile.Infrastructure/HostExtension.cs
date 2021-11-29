@@ -128,11 +128,6 @@ namespace Profile.Infrastructure
                 },
                 new AttributeDefinition
                 {
-                    AttributeName = "userId",
-                    AttributeType = "S"
-                },
-                new AttributeDefinition
-                {
                     AttributeName = "name",
                     AttributeType = "S"
                 }
@@ -148,7 +143,7 @@ namespace Profile.Infrastructure
                 },
                 new KeySchemaElement
                 {
-                    AttributeName = "userId",
+                    AttributeName = "name",
                     KeyType = "RANGE"  //Sort key
                 }
             };
@@ -160,21 +155,21 @@ namespace Profile.Infrastructure
                 WriteCapacityUnits = 1L
             };
 
-            // NameIndex
-            var NameIndex = new GlobalSecondaryIndex()
-            {
-                IndexName = "NameIndex",
-                ProvisionedThroughput = ptIndex,
-                KeySchema = {
-                    new KeySchemaElement {
-                        AttributeName = "name", KeyType = "HASH" //Partition key
-                    }
-                },
-                Projection = new Projection
-                {
-                    ProjectionType = "ALL"
-                }
-            };
+            //// NameIndex
+            //var NameIndex = new GlobalSecondaryIndex()
+            //{
+            //    IndexName = "NameIndex",
+            //    ProvisionedThroughput = ptIndex,
+            //    KeySchema = {
+            //        new KeySchemaElement {
+            //            AttributeName = "name", KeyType = "HASH" //Partition key
+            //        }
+            //    },
+            //    Projection = new Projection
+            //    {
+            //        ProjectionType = "ALL"
+            //    }
+            //};
 
             var request = new CreateTableRequest
             {
@@ -187,9 +182,9 @@ namespace Profile.Infrastructure
                 },
                 AttributeDefinitions = attributeDefinitions,
                 KeySchema = tableKeySchema,
-                GlobalSecondaryIndexes = {
-                    NameIndex
-                }
+                //GlobalSecondaryIndexes = {
+                //    NameIndex
+                //}
             };
 
             var response = await client.CreateTableAsync(request);

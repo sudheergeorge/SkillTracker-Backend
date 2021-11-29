@@ -25,24 +25,21 @@ namespace Admin.Infrastructure.Repositories
 
         public async Task<List<string>> GetEmployeeIdsByname(string name)
         {
-            QueryRequest queryRequest = new QueryRequest
+            Dictionary<string, Condition> conditions = new Dictionary<string, Condition>();
+
+            Condition titleCondition = new Condition();
+            titleCondition.ComparisonOperator = "BEGINS_WITH";
+            titleCondition.AttributeValueList.Add(new AttributeValue { S = name });
+            conditions["name"] = titleCondition;
+
+            var scanRequest = new ScanRequest
             {
                 TableName = _tableName,
-                IndexName = "NameIndex",
-                KeyConditionExpression = "#nm = :v_name",
-                ExpressionAttributeNames = new Dictionary<String, String> {
-                    {"#nm", "name"}
-                },
-                ExpressionAttributeValues = new Dictionary<string, AttributeValue> {
-                    {":v_name", new AttributeValue { S =  name }}
-                },
-                ScanIndexForward = true,
-                ProjectionExpression = "empId"
+                ScanFilter = conditions,
             };
 
-            var result = await _client.QueryAsync(queryRequest);
+            var result = await _client.ScanAsync(scanRequest);
 
-            var reponse = new List<string>();
             return result.Items.Select(item => item["empId"].S).ToList();
         }
 

@@ -10,10 +10,10 @@ namespace SkillTracker.Entities
         public string EmpId { get; set; }
 
         [DynamoDBProperty("userId")]
-        [DynamoDBRangeKey]
         public string UserId { get; set; }
 
         [DynamoDBProperty("name")]
+        [DynamoDBRangeKey]
         public string Name { get; set; }
 
         [DynamoDBProperty("email")]
