@@ -57,9 +57,5 @@ namespace Profile.Infrastructure.Repositories
             await table.PutItemAsync(doc);
         }
 
-        public Task UpdateAsync(ProfileEntity entity)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

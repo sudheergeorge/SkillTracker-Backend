@@ -10,5 +10,7 @@ namespace Profile.Application.Contracts
 {
     public interface IProfileRepository : IAsyncRepository<ProfileEntity>
     {
+        Task PutItem(ProfileEntity entity);
+        Task<ProfileEntity> GetItem(string hadhKey);
     }
 }

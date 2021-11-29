@@ -1,9 +1,14 @@
-﻿using MediatR;
+﻿using FluentValidation.Results;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Profile.API.Filters;
+using Profile.Application.Exceptions;
 using Profile.Application.Features.Commands.AddProfile;
 using Profile.Application.Features.Commands.UpdateProfile;
+using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -28,7 +33,7 @@ namespace Profile.API.Controllers
         public async Task<ActionResult<int>> Health()
         {
             _logger.LogInformation("Profile Api V3- health check.");
-            var response = "Profile Api V3- I am Good!!";
+            var response = "Profile Api V4- I am Good!!";
             return Ok(response);
         }
 
@@ -41,13 +46,21 @@ namespace Profile.API.Controllers
         }
 
         [HttpPut(Name = "UpdateProfile")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> UpdateProfile([FromBody] UpdateProfileCommand command)
+        public async Task<ActionResult<int>> UpdateProfile([FromBody] UpdateProfileCommand command,
+            [FromHeader(Name="x-userid")] string userId)
         {
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                var errors = new List<ValidationFailure> { new ValidationFailure("", "UserId header missing") };
+                throw new ValidationException(errors);
+            }
+
             var result = await _mediator.Send(command);
-            return NoContent();
+            return Ok();
         }
     }
 }

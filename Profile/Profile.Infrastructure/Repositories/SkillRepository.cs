@@ -1,4 +1,5 @@
-﻿using Amazon.DynamoDBv2.DataModel;
+﻿using Amazon.DynamoDBv2;
+using Amazon.DynamoDBv2.DataModel;
 using Profile.Application.Contracts;
 using Profile.Domain.Entities;
 using SkillTracker.Entities;
@@ -13,6 +14,7 @@ namespace Profile.Infrastructure.Repositories
     public class SkillRepository : ISkillRepository
     {
         private readonly DynamoDBContext dbcontext;
+        private readonly AmazonDynamoDBClient _dbClient;
 
         public SkillRepository(DynamoDBContext dbcontext)
         {
@@ -39,19 +41,12 @@ namespace Profile.Infrastructure.Repositories
             await dbcontext.DeleteAsync<SkillEntity>(hashKey, rangeKey);
         }
 
-        public Task<SkillEntity> GetItem(string hadhKey)
+
+        public async Task<List<SkillEntity>> GetItems(string hadhKey)
         {
-            throw new NotImplementedException();
+            var res = dbcontext.QueryAsync<SkillEntity>(hadhKey);
+            return await res.GetRemainingAsync();
         }
 
-        public Task PutItem(SkillEntity entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateAsync(SkillEntity entity)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

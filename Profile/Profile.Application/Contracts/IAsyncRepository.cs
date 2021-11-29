@@ -10,12 +10,9 @@ namespace Profile.Application.Contracts
 
         Task<IList<T>> AddRangeAsync(IList<T> entities);
 
-        Task UpdateAsync(T entity);
+        //Task UpdateAsync(T entity);
 
         Task DeleteAsync(object hashKey, object rangeKey);
 
-        Task PutItem(T entity);
-
-        Task<T> GetItem(string hadhKey);
     }
 }

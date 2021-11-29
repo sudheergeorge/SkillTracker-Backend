@@ -35,19 +35,5 @@ namespace Profile.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<PersonalInfoEntity> GetItem(string hadhKey)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task PutItem(PersonalInfoEntity entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateAsync(PersonalInfoEntity entity)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

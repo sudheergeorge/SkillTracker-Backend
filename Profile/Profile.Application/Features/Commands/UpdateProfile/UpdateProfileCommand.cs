@@ -8,8 +8,6 @@ namespace Profile.Application.Features.Commands.UpdateProfile
     {
         public string EmpId { get; set; }
 
-        public List<int> DeletedSkills { get; set; }
-
         public List<Skill> Skills { get; set; }
     }
 }
