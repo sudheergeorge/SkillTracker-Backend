@@ -13,7 +13,8 @@ namespace Admin.Application.Behaviors
             if (request is SearchProfileQuery)
             {
                 var query = request as SearchProfileQuery;
-                if (!query.EmpId.ToUpper().StartsWith("CTS"))
+                if (!string.IsNullOrEmpty(query.EmpId) &&
+                    !query.EmpId.ToUpper().StartsWith("CTS"))
                 {
                     query.EmpId = "CTS" + query.EmpId;
                 }
